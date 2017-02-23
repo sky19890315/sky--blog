@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Article;
-use Carbon\Carbon;
 
-class BlogController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +16,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //按发表事件倒序分页显示
-        $articles = Article::where('published' , '<=' , Carbon::now())->orderBy('published' , 'desc')
-            ->paginate(config('blog.articles-per-page'));
-        return view('blog.index' ,compact('articles'));
+        //后台文章管理
+        return view('admin.article.index');
     }
 
     /**
@@ -51,11 +47,9 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($title)
+    public function show($id)
     {
-        //展示文章样式
-        $article = Article::where($title)->firstOrFail();
-        return view('blog.article')->withArticle($article);
+        //
     }
 
     /**

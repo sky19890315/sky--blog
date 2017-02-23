@@ -16,3 +16,17 @@ get('/' ,function (){
 });
 //    访问首页
 get('blog' , 'BlogController@index');
+get('blog/{title}' ,'BlogController@show');
+
+//后台管理
+get('admin' ,function (){
+    return redirect('/admin/article');
+});
+//认证过滤
+$router->group(['namespace' => 'Admin' , 'middleware' => 'auth' ] ,function (){
+    resource('admin/article' , 'ArticleController');
+});
+//登录退出
+get('/auth/login' ,'Auth\AuthController@getLogin');
+post('/auth/login' ,'Auth\AuthController@postLogin');
+get('/auth/logout' ,'Auth\AuthController@getLogout');
